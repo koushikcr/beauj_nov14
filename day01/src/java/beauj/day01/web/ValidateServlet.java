@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/validate")
+@WebServlet(urlPatterns = "/validate")
 public class ValidateServlet extends HttpServlet {
 
 	//Injection point

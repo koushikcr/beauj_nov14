@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/cart")
+@WebServlet(urlPatterns = "/cart")
 public class ShoppingCartServlet extends HttpServlet {
 
 	@Inject private Item itemContainer;
@@ -40,6 +40,10 @@ public class ShoppingCartServlet extends HttpServlet {
 		System.out.println(">>> quantity: " + itemContainer.getQuantity());
 
 		cart.add(itemContainer.createCopy());
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException ex) { }
 
 		resp.setStatus(HttpServletResponse.SC_ACCEPTED);
 		resp.setContentType("text/html");
