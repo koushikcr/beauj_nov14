@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+		<h1>Customer Query</h1>
+
+		<h:form id="queryForm">
+
+			<h1> <h:outputText id="text" value="#{queryView.queryId}"/> </h1>
+
+			Customer id:
+			<h:inputText value="#{queryView.queryId}"  id="queryIdField"
+						 converterMessage="Custoer id must be a +ve number"
+						 requiredMessage="Please enter the customer id"
+						 required="true">
+				<f:ajax event="keyup" render=":queryForm:text" execute="@this"/>
+			</h:inputText>
+
+			<h:commandButton value="Search" action="#{queryView.search2()}">
+				<f:ajax execute="@form" 
+						render="@form"/>
+			</h:commandButton>
+
+			<h:dataTable var="o" value="#{queryView.orders}" id="orderTable">
+				<h:column>
+					<f:facet name="header">Order Id</f:facet>
+					#{o.orderId}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Item</f:facet>
+					#{o.item}
+				</h:column>
+			</h:dataTable>
+		</h:form>
+    </h:body>
+</html>
+
