@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+		<h1>Team Query</h1>
+		<h:form>
+
+			<h:panelGrid columns="2">
+
+				Team Id:
+				<h:inputText value="#{teamView.teamId}"/>
+
+				<h:commandButton value="Clear" action="#{teamView.clear()}"/>
+				<h:commandButton value="Search" action="#{teamView.query()}"/>
+
+				<h2>Result</h2>
+				<h:panelGroup/>
+
+				Team Id:
+				<h:inputText value="#{teamView.team.teamId}"/>
+
+				Team Name:
+				<h:inputText value="#{teamView.team.name}"/>
+
+				Git:
+				<h:inputText value="#{teamView.team.gitRepo}"/>
+
+				<h:commandButton value="Update" action="#{teamView.update()}"/>
+				<h:commandButton value="Add" action="#{teamView.add()}"/>
+
+				<h:commandButton value="Delete" action="#{teamView.delete()}"/>
+				<h:panelGroup/>
+
+			</h:panelGrid>
+
+		</h:form>
+    </h:body>
+</html>
