@@ -4,7 +4,10 @@ import beauj.day03.business.TeamBean;
 import beauj.day03.model.Team;
 import java.net.URI;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.enterprise.concurrent.ManagedScheduledExecutorService;
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -13,6 +16,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,6 +27,9 @@ import javax.ws.rs.core.UriInfo;
 @RequestScoped
 @Path("/team")
 public class TeamResource {
+
+	@Resource(lookup = "concurrent/myThreadPool")
+	private ManagedScheduledExecutorService service;
 
 	@EJB private TeamBean teamBean;
 
@@ -64,6 +72,20 @@ public class TeamResource {
 				.ok(arrBuilder.build())
 				.build());
 	}
+
+	@GET
+	@Path("{tid}")
+	@Produces(MediaType.APPLICATION_JSON) //application/xml
+	public void getAsJson(@PathParam("tid")String tid,
+			@Suspended AsyncResponse asyncResponse) {
+
+		FindTeamTask task = new FindTeamTask(asyncResponse, teamBean, tid);
+
+		service.schedule(task, 5, TimeUnit.SECONDS);
+
+		System.out.println(">>> exiting getAsJson");
+	}
+
 
 	@GET
 	@Path("{tid}")
